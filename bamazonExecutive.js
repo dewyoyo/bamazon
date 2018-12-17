@@ -41,7 +41,7 @@ function viewSalesByDept() {
 
 	connection.query(dataQuery, function (err, res) {
 		if (err) throw err;
-		console.log(res);
+		// console.log(res);
 
 		console.log("====================================================================================");
 		console.log("| department_id | department_name | over_head_costs | product_sales | total_profit |");

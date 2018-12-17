@@ -14,7 +14,7 @@ var connection = mysql.createConnection({
 
 function startPurchase() {
 	var dataQuery = "SELECT * FROM products "
-		+ "WHERE stock_quantity >0 AND item_id < 10;";
+		+ "WHERE stock_quantity >0 AND item_id < 100;";
 
 	connection.query(
 		dataQuery,
@@ -45,17 +45,17 @@ function startPurchase() {
 
 
 function updateQuantity(funcBuyQty, funcBuyItemID, funcBuyTotal) {
-
-
-	// 'UPDATE Products SET ? WHERE ?', 
-	// [{stock_quantity: currentQty + parseInt(ans.qty)}, {item_id: ans.product.split(":")[0]}]
+// funcBuyItemID = parseInt(funcBuyTotal);
+// console.log("funcBuyItemID: " + funcBuyItemID);
 	var updateQuery = "UPDATE products SET stock_quantity = stock_quantity - ? ,"
 		+ "product_sales = product_sales + ?"
-		+ "WHERE item_id = ?;";
+		+ "WHERE item_id = ?";
 
 	connection.query(
 		updateQuery,
 		[funcBuyQty, funcBuyTotal, funcBuyItemID],
+	// connection.query('UPDATE Products SET ??, ?? WHERE ?', 
+	// 	[{stock_quantity: stock_quantity + funcBuyQty},{product_sales: product_sales + funcBuyTotal}, {item_id: funcBuyItemID} ],
 		function (err, response) {
 			if (err) throw err;
 			console.log("=================================================================================================================");
@@ -108,9 +108,9 @@ function checkQuantity(buyItemID, buyQty) {
 					}
 				];
 				inquirer.prompt(quantityQ).then(res => {
-					console.log(res);
+					// console.log(res);
 					reUserQty = res.quantity;
-					console.log("reUserQty: " + reUserQty + " remainingQty: " + remainingQty);
+					// console.log("reUserQty: " + reUserQty + " remainingQty: " + remainingQty);
 					if (remainingQty < reUserQty) {
 						checkQuantity(buyItemID, reUserQty);
 					}
@@ -158,7 +158,7 @@ function inquirerQ(parameter) {
 
 		var userItemID = res.items.split(":")[0];
 		var userQty = res.quantity;
-console.log(userItemID);
+// console.log(userItemID);
 		checkQuantity(userItemID, userQty);
 	});
 };
