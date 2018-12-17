@@ -19,7 +19,7 @@ function start() {
         type: "list",
         name: "managerMenu",
         message: "What would you like to do?",
-        choices: ["View Products for Sale", "View Low Inventory", "Add to Inventory", "Add New Product", "Exit"]
+        choices: ["View Products for Sale", "View Low Inventory", "Add to Inventory", "Add New Product", "End Session"]
     }]).then(function (ans) {
         switch (ans.managerMenu) {
             case "View Products for Sale":
@@ -34,7 +34,7 @@ function start() {
             case "Add New Product":
                 addNewProduct();
                 break;
-            case "Exit":
+            case "End Session":
                 console.log('Bye!');
                 connection.end();
         }
@@ -49,8 +49,8 @@ function viewProducts() {
         console.log("   ID   |                              Product                               |        Department        |  Price  |  QTY  ");
         console.log("=========================================================================================================================");
         for(var i = 0; i<res.length;i++){
-          console.log(`${res[i].item_id.toString().padEnd(7," ")} | ${res[i].product_name.padEnd(66," ")} | ${res[i].department_name.padEnd(24," ")} | ${res[i].price.toString().padEnd(7," ")} | ${res[i].stock_quantity.toString().padEnd(7," ")}`);
-          console.log('-----------------------------------------------------------------------------------------------------------------------')
+			console.log(`${res[i].item_id.toString().padEnd(7," ")} | ${res[i].product_name.padEnd(66," ")} | ${res[i].department_name.padEnd(24," ")} | ${res[i].price.toString().padEnd(7," ")} | ${res[i].stock_quantity.toString().padEnd(7," ")}`);
+			console.log('-----------------------------------------------------------------------------------------------------------------------')
         }
       
         start();
@@ -105,19 +105,19 @@ function addToInventory(){
                 }
             }
         }]).then(function(ans){
-          // console.log(ans);
-          // console.log(ans.product.split(":")[0]);
-          var currentQty = ans.product.split("=")[1];
-          currentQty = parseInt(currentQty.split(")")[0]);
+			// console.log(ans);
+			// console.log(ans.product.split(":")[0]);
+			var currentQty = ans.product.split("=")[1];
+			currentQty = parseInt(currentQty.split(")")[0]);
 
-            connection.query('UPDATE Products SET ? WHERE ?', [
-                {stock_quantity: currentQty + parseInt(ans.qty)},
-                {item_id: ans.product.split(":")[0]}
-            ], function(err, res){
-                  if(err) throw err;
-                  console.log(res.affectedRows + " products updated!\n");
-                  start();
-              });
+            connection.query(
+				'UPDATE Products SET ? WHERE ?', 
+				[{stock_quantity: currentQty + parseInt(ans.qty)}, {item_id: ans.product.split(":")[0]}]
+				, function(err, res){
+					if(err) throw err;
+					console.log(res.affectedRows + " products updated!\n");
+					start();
+            });
     })
   });
 }
@@ -128,8 +128,12 @@ function addNewProduct() {
         name: "product",
         message: "Product: ",
         validate: function(value){
-          if(value){return true;}
-          else{return false;}
+          	if (value) {
+			  	return true;
+			}
+          	else {
+				return false;
+			}
         }
     }, {
         type: "input",

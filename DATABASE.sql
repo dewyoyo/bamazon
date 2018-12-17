@@ -76,3 +76,64 @@ CREATE TABLE sales (
   total_price FLOAT(12,2), 
   PRIMARY KEY (order_id)
 );
+
+
+CREATE TABLE departments
+(
+  department_id INT NOT NULL  AUTO_INCREMENT,
+  department_name VARCHAR(100) NULL,
+  over_head_costs FLOAT(10,2),
+  PRIMARY KEY (department_id)
+);
+
+SELECT department_name FROM products
+GROUP BY department_name;
+
+INSERT INTO departments 
+SET department_name="Books", 
+over_head_costs= 1000;
+
+INSERT INTO departments 
+SET department_name="Food", 
+over_head_costs= 3000;
+
+INSERT INTO departments 
+SET department_name="Home", 
+over_head_costs= 2000;
+
+INSERT INTO departments 
+SET department_name="Movie", 
+over_head_costs= 500;
+
+INSERT INTO departments 
+SET department_name="Music", 
+over_head_costs= 300;
+
+INSERT INTO departments 
+SET department_name="Toys", 
+over_head_costs= 1500;
+
+SELECT * FROM departments;
+
+SET SQL_SAFE_UPDATES=0;
+
+UPDATE products
+SET product_sales = price * stock_quantity;
+
+SELECT a.department_id, a.department_name, a.over_head_costs, SUM(b.product_sales) product_sum
+FROM departments a, products b
+WHERE a.department_name = b.department_name
+GROUP BY a.department_name;
+
+SELECT a.department_id, a.department_name, a.over_head_costs, SUM(b.product_sales) product_sum
+--FROM departments a, products b
+FROM departments a LEFT JOIN products b
+ON a.department_name = b.department_name
+WHERE a.department_name = b.department_name
+GROUP BY a.department_name;
+
+SELECT a.department_id, a.department_name, a.over_head_costs, IFNULL(SUM(b.product_sales), 0) product_sum
+FROM departments a LEFT JOIN products b
+ON a.department_name = b.department_name
+GROUP BY a.department_name
+ORDER BY a.department_id;
