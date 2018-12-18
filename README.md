@@ -61,3 +61,6 @@ This app is Amazon-like storefront with the MySQL and node.js. The app will take
 
     ## Demo Videos
     * (https://drive.google.com/file/d/1aLl5AjqLi7BqSd95nDm9DbvnvuXNXx7S/view)
+
+    ## Demo Videos for restriction
+    * (https://drive.google.com/file/d/1E4ox7c6e0OkB3rzdk3jWjeiT_dBXp8Ru/view)
