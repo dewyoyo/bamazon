@@ -96,14 +96,11 @@ function addToInventory() {
             type: "input",
             name: "qty",
             message: "How much would you like to add?",
-            validate: function (value) {
-                if (isNaN(value) === false) {
-                    return true;
-                }
-                else {
-                    return false;
-                }
-            }
+            validate: function(value) {
+                var valid = !isNaN(parseInt(value));
+                return valid || 'Please enter a number';
+            },
+            filter: Number
         }]).then(function (ans) {
             // console.log(ans);
             // console.log(ans.product.split(":")[0]);
