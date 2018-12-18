@@ -151,7 +151,7 @@ function addNewProduct() {
         //       return true;
         //     }
       
-        //     return 'Please enter valid alphabet';
+        //     return 'Please enter valid department name.';
         // }
         validate: function (value) {
             if (value) {
