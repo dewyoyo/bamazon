@@ -58,3 +58,6 @@ This app is Amazon-like storefront with the MySQL and node.js. The app will take
     * If the manager selects `Create New Department`, it allows the manager to create a new department and input current overhead costs and product sales. If there are none, by default it will set at 0.
 
     * If the manager selects `End Session`, it ends the session and doesn't go back to the menu.
+
+    ## Demo Videos
+    * (https://drive.google.com/file/d/1aLl5AjqLi7BqSd95nDm9DbvnvuXNXx7S/view)

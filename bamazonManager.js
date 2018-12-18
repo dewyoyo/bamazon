@@ -128,6 +128,31 @@ function addNewProduct() {
         type: "input",
         name: "product",
         message: "Product: ",
+        validate: function(value) {
+            var notPass = value.match(
+                /[:]/i
+              );
+              if (notPass) {
+                return "':' is not allowed for product name.";
+              }
+              else {
+                  return true;
+              }
+        }
+    }, {
+        type: "input",
+        name: "department",
+        message: "Department: ",
+        // validate: function(value) {
+        //     var pass = value.match(
+        //       /[abcdefghijklmnopqrstuvwxyz1234567890]/i
+        //     );
+        //     if (pass) {
+        //       return true;
+        //     }
+      
+        //     return 'Please enter valid alphabet';
+        // }
         validate: function (value) {
             if (value) {
                 return true;
@@ -138,24 +163,22 @@ function addNewProduct() {
         }
     }, {
         type: "input",
-        name: "department",
-        message: "Department: "
-    }, {
-        type: "input",
         name: "price",
         message: "Price: ",
-        validate: function (value) {
-            if (isNaN(value) === false) { return true; }
-            else { return false; }
-        }
+        validate: function(value) {
+            var valid = !isNaN(parseFloat(value));
+            return valid || 'Please enter a number';
+        },
+        filter: Number
     }, {
         type: "input",
         name: "quantity",
         message: "Quantity: ",
-        validate: function (value) {
-            if (isNaN(value) == false) { return true; }
-            else { return false; }
-        }
+        validate: function(value) {
+            var valid = !isNaN(parseInt(value));
+            return valid || 'Please enter a number';
+        },
+        filter: Number
     }]).then(function (ans) {
 
 
@@ -178,10 +201,10 @@ function addNewProduct() {
                         ans.department
                         , function (err_dep, res_dep) {
                             if (err_dep) throw err;
-                            console.log(res_dep[0]);
+                            // console.log(res_dep[0]);
                             // if it does not exist, add this new department to departments table
                             if (!res_dep[0]) {
-                                console.log("No such department!");
+                                // console.log("No such department!");
 
                                 connection.query('INSERT INTO Departments SET ?', {
                                     department_name: ans.department,
