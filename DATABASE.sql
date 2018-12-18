@@ -137,3 +137,5 @@ FROM departments a LEFT JOIN products b
 ON a.department_name = b.department_name
 GROUP BY a.department_name
 ORDER BY a.department_id;
+
+SELECT * FROM departments WHERE department_name LIKE 'Toy%';

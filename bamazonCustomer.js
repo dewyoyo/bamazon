@@ -47,8 +47,8 @@ function startPurchase() {
 function updateQuantity(funcBuyQty, funcBuyItemID, funcBuyTotal) {
 // funcBuyItemID = parseInt(funcBuyTotal);
 // console.log("funcBuyItemID: " + funcBuyItemID);
-	var updateQuery = "UPDATE products SET stock_quantity = stock_quantity - ? ,"
-		+ "product_sales = product_sales + ?"
+	var updateQuery = "UPDATE products SET stock_quantity = stock_quantity - ? , "
+		+ "product_sales = product_sales + ? "
 		+ "WHERE item_id = ?";
 
 	connection.query(
